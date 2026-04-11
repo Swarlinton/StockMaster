@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockMaster - Suppliers</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        .sidebar h2 {
+            margin-top: 0;
+            font-size: 24px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            margin: 15px 0;
+        }
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .sidebar ul li a:hover {
+            background-color: #34495e;
+        }
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .barcode {
+            display: inline-block;
+            height: 50px;
+            width: 150px;
+            background: repeating-linear-gradient(
+                to right,
+                #000 0px,
+                #000 2px,
+                #fff 2px,
+                #fff 4px,
+                #000 4px,
+                #000 6px,
+                #fff 6px,
+                #fff 8px,
+                #000 8px,
+                #000 10px,
+                #fff 10px,
+                #fff 12px,
+                #000 12px,
+                #000 14px,
+                #fff 14px,
+                #fff 16px,
+                #000 16px,
+                #000 18px,
+                #fff 18px,
+                #fff 20px,
+                #000 20px,
+                #000 22px,
+                #fff 22px,
+                #fff 24px,
+                #000 24px,
+                #000 26px,
+                #fff 26px,
+                #fff 28px,
+                #000 28px,
+                #000 30px,
+                #fff 30px,
+                #fff 32px,
+                #000 32px,
+                #000 34px,
+                #fff 34px,
+                #fff 36px,
+                #000 36px,
+                #000 38px,
+                #fff 38px,
+                #fff 40px,
+                #000 40px,
+                #000 42px,
+                #fff 42px,
+                #fff 44px,
+                #000 44px,
+                #000 46px,
+                #fff 46px,
+                #fff 48px,
+                #000 48px,
+                #000 50px
+            );
+            border: 1px solid #000;
+        }
+        .section {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .action-button {
+            padding: 15px 30px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+        .action-button:hover {
+            background-color: #c0392b;
+        }
+        .alert-button {
+            background-color: #f39c12;
+        }
+        .alert-button:hover {
+            background-color: #e67e22;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        table th {
+            background-color: #f8f8f8;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">
+                <div class="barcode"></div>
+                <h2>StockMaster</h2>
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="stock.html">Stock</a></li>
+                <li><a href="suppliers.html">Suppliers</a></li>
+                <li><a href="orders.html">Orders</a></li>
+                <li><a href="reports.html">Reports</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <div class="section">
+                <h2>Add Supplier</h2>
+                <form id="supplier-form">
+                    <div class="form-group">
+                        <label for="supplier-name">Supplier Name</label>
+                        <input type="text" id="supplier-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="supplier-email">Email</label>
+                        <input type="email" id="supplier-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="supplier-phone">Phone</label>
+                        <input type="tel" id="supplier-phone" required>
+                    </div>
+                    <button type="submit" class="action-button">Add Supplier</button>
+                </form>
+            </div>
+            <div class="section">
+                <h2>Suppliers List</h2>
+                <table id="suppliers-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Sample data -->
+                        <tr>
+                            <td>Supplier A</td>
+                            <td>supplierA@example.com</td>
+                            <td>123-456-7890</td>
+                            <td><button class="action-button alert-button" onclick="alertSupplier('Supplier A')">Alert</button></td>
+                        </tr>
+                        <tr>
+                            <td>Supplier B</td>
+                            <td>supplierB@example.com</td>
+                            <td>098-765-4321</td>
+                            <td><button class="action-button alert-button" onclick="alertSupplier('Supplier B')">Alert</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        let suppliers = [
+            { name: 'Supplier A', email: 'supplierA@example.com', phone: '123-456-7890' },
+            { name: 'Supplier B', email: 'supplierB@example.com', phone: '098-765-4321' }
+        ];
+
+        function updateTable() {
+            const tbody = document.querySelector('#suppliers-table tbody');
+            tbody.innerHTML = '';
+            suppliers.forEach(supplier => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${supplier.name}</td>
+                        <td>${supplier.email}</td>
+                        <td>${supplier.phone}</td>
+                        <td><button class="action-button alert-button" onclick="alertSupplier('${supplier.name}')">Alert</button></td>
+                    </tr>
+                `;
+            });
+        }
+
+        document.getElementById('supplier-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('supplier-name').value;
+            const email = document.getElementById('supplier-email').value;
+            const phone = document.getElementById('supplier-phone').value;
+            suppliers.push({ name, email, phone });
+            updateTable();
+            this.reset();
+        });
+
+        function alertSupplier(name) {
+            alert(`Alert sent to ${name} for low stock!`);
+        }
+
+        updateTable();
+    </script>
+</body>
+</html>

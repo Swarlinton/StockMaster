@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockMaster - Orders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        .sidebar h2 {
+            margin-top: 0;
+            font-size: 24px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            margin: 15px 0;
+        }
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .sidebar ul li a:hover {
+            background-color: #34495e;
+        }
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .barcode {
+            display: inline-block;
+            height: 50px;
+            width: 150px;
+            background: repeating-linear-gradient(
+                to right,
+                #000 0px,
+                #000 2px,
+                #fff 2px,
+                #fff 4px,
+                #000 4px,
+                #000 6px,
+                #fff 6px,
+                #fff 8px,
+                #000 8px,
+                #000 10px,
+                #fff 10px,
+                #fff 12px,
+                #000 12px,
+                #000 14px,
+                #fff 14px,
+                #fff 16px,
+                #000 16px,
+                #000 18px,
+                #fff 18px,
+                #fff 20px,
+                #000 20px,
+                #000 22px,
+                #fff 22px,
+                #fff 24px,
+                #000 24px,
+                #000 26px,
+                #fff 26px,
+                #fff 28px,
+                #000 28px,
+                #000 30px,
+                #fff 30px,
+                #fff 32px,
+                #000 32px,
+                #000 34px,
+                #fff 34px,
+                #fff 36px,
+                #000 36px,
+                #000 38px,
+                #fff 38px,
+                #fff 40px,
+                #000 40px,
+                #000 42px,
+                #fff 42px,
+                #fff 44px,
+                #000 44px,
+                #000 46px,
+                #fff 46px,
+                #fff 48px,
+                #000 48px,
+                #000 50px
+            );
+            border: 1px solid #000;
+        }
+        .section {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .action-button {
+            padding: 15px 30px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+        .action-button:hover {
+            background-color: #c0392b;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        table th {
+            background-color: #f8f8f8;
+            font-weight: bold;
+        }
+        .status-pending {
+            color: #f39c12;
+        }
+        .status-completed {
+            color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">
+                <div class="barcode"></div>
+                <h2>StockMaster</h2>
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="stock.html">Stock</a></li>
+                <li><a href="suppliers.html">Suppliers</a></li>
+                <li><a href="orders.html">Orders</a></li>
+                <li><a href="reports.html">Reports</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <div class="section">
+                <h2>Create Order</h2>
+                <form id="order-form">
+                    <div class="form-group">
+                        <label for="order-item">Item</label>
+                        <select id="order-item" required>
+                            <option value="">Select Item</option>
+                            <option value="Widget A">Widget A</option>
+                            <option value="Widget B">Widget B</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="order-quantity">Quantity</label>
+                        <input type="number" id="order-quantity" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="order-supplier">Supplier</label>
+                        <select id="order-supplier" required>
+                            <option value="">Select Supplier</option>
+                            <option value="Supplier A">Supplier A</option>
+                            <option value="Supplier B">Supplier B</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="action-button">Create Order</button>
+                </form>
+            </div>
+            <div class="section">
+                <h2>Orders List</h2>
+                <table id="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Item</th>
+                            <th>Quantity</th>
+                            <th>Supplier</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Sample data -->
+                        <tr>
+                            <td>ORD001</td>
+                            <td>Widget A</td>
+                            <td>20</td>
+                            <td>Supplier A</td>
+                            <td class="status-pending">Pending</td>
+                            <td>2024-04-08</td>
+                        </tr>
+                        <tr>
+                            <td>ORD002</td>
+                            <td>Widget B</td>
+                            <td>15</td>
+                            <td>Supplier B</td>
+                            <td class="status-completed">Completed</td>
+                            <td>2024-04-07</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        let orders = [
+            { id: 'ORD001', item: 'Widget A', quantity: 20, supplier: 'Supplier A', status: 'Pending', date: '2024-04-08' },
+            { id: 'ORD002', item: 'Widget B', quantity: 15, supplier: 'Supplier B', status: 'Completed', date: '2024-04-07' }
+        ];
+
+        function updateTable() {
+            const tbody = document.querySelector('#orders-table tbody');
+            tbody.innerHTML = '';
+            orders.forEach(order => {
+                const statusClass = order.status === 'Pending' ? 'status-pending' : 'status-completed';
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${order.id}</td>
+                        <td>${order.item}</td>
+                        <td>${order.quantity}</td>
+                        <td>${order.supplier}</td>
+                        <td class="${statusClass}">${order.status}</td>
+                        <td>${order.date}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        document.getElementById('order-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const item = document.getElementById('order-item').value;
+            const quantity = parseInt(document.getElementById('order-quantity').value);
+            const supplier = document.getElementById('order-supplier').value;
+            const id = 'ORD' + (orders.length + 1).toString().padStart(3, '0');
+            const date = new Date().toISOString().split('T')[0];
+            orders.push({ id, item, quantity, supplier, status: 'Pending', date });
+            updateTable();
+            this.reset();
+        });
+
+        updateTable();
+    </script>
+</body>
+</html>

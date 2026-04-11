@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockMaster - Stock Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        .sidebar h2 {
+            margin-top: 0;
+            font-size: 24px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            margin: 15px 0;
+        }
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .sidebar ul li a:hover {
+            background-color: #34495e;
+        }
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .barcode {
+            display: inline-block;
+            height: 50px;
+            width: 150px;
+            background: repeating-linear-gradient(
+                to right,
+                #000 0px,
+                #000 2px,
+                #fff 2px,
+                #fff 4px,
+                #000 4px,
+                #000 6px,
+                #fff 6px,
+                #fff 8px,
+                #000 8px,
+                #000 10px,
+                #fff 10px,
+                #fff 12px,
+                #000 12px,
+                #000 14px,
+                #fff 14px,
+                #fff 16px,
+                #000 16px,
+                #000 18px,
+                #fff 18px,
+                #fff 20px,
+                #000 20px,
+                #000 22px,
+                #fff 22px,
+                #fff 24px,
+                #000 24px,
+                #000 26px,
+                #fff 26px,
+                #fff 28px,
+                #000 28px,
+                #000 30px,
+                #fff 30px,
+                #fff 32px,
+                #000 32px,
+                #000 34px,
+                #fff 34px,
+                #fff 36px,
+                #000 36px,
+                #000 38px,
+                #fff 38px,
+                #fff 40px,
+                #000 40px,
+                #000 42px,
+                #fff 42px,
+                #fff 44px,
+                #000 44px,
+                #000 46px,
+                #fff 46px,
+                #fff 48px,
+                #000 48px,
+                #000 50px
+            );
+            border: 1px solid #000;
+        }
+        .section {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .action-button {
+            padding: 15px 30px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+        .action-button:hover {
+            background-color: #c0392b;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        table th {
+            background-color: #f8f8f8;
+            font-weight: bold;
+        }
+        .alert {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">
+                <div class="barcode"></div>
+                <h2>StockMaster</h2>
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="stock.html">Stock</a></li>
+                <li><a href="suppliers.html">Suppliers</a></li>
+                <li><a href="orders.html">Orders</a></li>
+                <li><a href="reports.html">Reports</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <div class="section">
+                <h2>Scan/Input Item</h2>
+                <form id="item-form">
+                    <div class="form-group">
+                        <label for="item-code">Item Code</label>
+                        <input type="text" id="item-code" placeholder="Scan or enter item code" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="item-name">Item Name</label>
+                        <input type="text" id="item-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity">Current Quantity</label>
+                        <input type="number" id="quantity" required>
+                    </div>
+                    <button type="button" class="action-button" onclick="scanItem()">Scan Item</button>
+                    <button type="submit" class="action-button">Add Item</button>
+                </form>
+            </div>
+            <div class="section">
+                <h2>Set Stock Limit</h2>
+                <form id="limit-form">
+                    <div class="form-group">
+                        <label for="limit-item">Select Item</label>
+                        <select id="limit-item" required>
+                            <option value="">Choose an item</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="min-limit">Minimum Stock Limit</label>
+                        <input type="number" id="min-limit" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="max-limit">Maximum Stock Limit</label>
+                        <input type="number" id="max-limit" required>
+                    </div>
+                    <button type="submit" class="action-button">Set Limit</button>
+                </form>
+            </div>
+            <div class="section">
+                <h2>Current Stock</h2>
+                <table id="stock-table">
+                    <thead>
+                        <tr>
+                            <th>Item Code</th>
+                            <th>Item Name</th>
+                            <th>Quantity</th>
+                            <th>Min Limit</th>
+                            <th>Max Limit</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Sample data -->
+                        <tr>
+                            <td>001</td>
+                            <td>Widget A</td>
+                            <td>50</td>
+                            <td>10</td>
+                            <td>100</td>
+                            <td>OK</td>
+                        </tr>
+                        <tr>
+                            <td>002</td>
+                            <td>Widget B</td>
+                            <td>5</td>
+                            <td>10</td>
+                            <td>100</td>
+                            <td class="alert">Low Stock</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        let stockData = [
+            { code: '001', name: 'Widget A', quantity: 50, min: 10, max: 100 },
+            { code: '002', name: 'Widget B', quantity: 5, min: 10, max: 100 }
+        ];
+
+        function updateTable() {
+            const tbody = document.querySelector('#stock-table tbody');
+            tbody.innerHTML = '';
+            stockData.forEach(item => {
+                const status = item.quantity < item.min ? 'Low Stock' : item.quantity > item.max ? 'Over Stock' : 'OK';
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${item.code}</td>
+                        <td>${item.name}</td>
+                        <td>${item.quantity}</td>
+                        <td>${item.min}</td>
+                        <td>${item.max}</td>
+                        <td class="${status === 'Low Stock' ? 'alert' : ''}">${status}</td>
+                    </tr>
+                `;
+            });
+            updateSelect();
+        }
+
+        function updateSelect() {
+            const select = document.getElementById('limit-item');
+            select.innerHTML = '<option value="">Choose an item</option>';
+            stockData.forEach(item => {
+                select.innerHTML += `<option value="${item.code}">${item.name}</option>`;
+            });
+        }
+
+        document.getElementById('item-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const code = document.getElementById('item-code').value;
+            const name = document.getElementById('item-name').value;
+            const quantity = parseInt(document.getElementById('quantity').value);
+            stockData.push({ code, name, quantity, min: 0, max: 100 });
+            updateTable();
+            this.reset();
+        });
+
+        document.getElementById('limit-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const code = document.getElementById('limit-item').value;
+            const min = parseInt(document.getElementById('min-limit').value);
+            const max = parseInt(document.getElementById('max-limit').value);
+            const item = stockData.find(i => i.code === code);
+            if (item) {
+                item.min = min;
+                item.max = max;
+                updateTable();
+                this.reset();
+            }
+        });
+
+        function scanItem() {
+            // Simulate scan
+            document.getElementById('item-code').value = 'SCANNED-' + Math.random().toString(36).substr(2, 9);
+        }
+
+        updateTable();
+    </script>
+</body>
+</html>
